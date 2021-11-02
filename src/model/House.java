@@ -11,6 +11,14 @@ package model;
  */
 public class House {
     
+    int houseNumber;
+    String community;
+    String city;
+
+    public House(int houseNumber) {
+        this.houseNumber = houseNumber;
+    }
+    
     
     
 }

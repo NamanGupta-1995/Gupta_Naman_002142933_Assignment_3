@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Patient;
@@ -84,9 +86,18 @@ public class VitalSignsJPanel extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblVitalSign = new javax.swing.JTable();
         btnUpdateVitals = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        lblErrorBT = new javax.swing.JLabel();
+        lblErrorBP = new javax.swing.JLabel();
+        lblErrorBS = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(255, 255, 204));
+
+        lblTitle.setFont(new java.awt.Font("Lucida Grande", 3, 18)); // NOI18N
         lblTitle.setText("VITAL SIGNS");
+        lblTitle.setBorder(new javax.swing.border.MatteBorder(null));
 
+        tblPatient.setBackground(new java.awt.Color(255, 255, 102));
         tblPatient.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -100,19 +111,32 @@ public class VitalSignsJPanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tblPatient);
 
+        lblAddVitalTitle.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         lblAddVitalTitle.setText("ADD VITAL SIGNS");
 
         lblBodyTemp.setText("ENTER BODY TEMPERATURE");
 
-        txtBodyTemp.setText("jTextField1");
+        txtBodyTemp.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBodyTempKeyReleased(evt);
+            }
+        });
 
         lblBloodPres.setText("ENTER BLOOD PRESSURE");
 
-        txtBloodPres.setText("jTextField2");
+        txtBloodPres.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBloodPresKeyReleased(evt);
+            }
+        });
 
         lblBodySugar.setText("ENTER BODY SUGAR");
 
-        txtBloodSugar.setText("jTextField3");
+        txtBloodSugar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBloodSugarKeyReleased(evt);
+            }
+        });
 
         btnSaveVitals.setText("SAVE");
         btnSaveVitals.addActionListener(new java.awt.event.ActionListener() {
@@ -121,6 +145,7 @@ public class VitalSignsJPanel extends javax.swing.JPanel {
             }
         });
 
+        tblVitalSign.setBackground(new java.awt.Color(255, 255, 102));
         tblVitalSign.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -141,42 +166,55 @@ public class VitalSignsJPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel2.setIcon(new javax.swing.ImageIcon("/Users/namangupta/Downloads/reception.png")); // NOI18N
+        jLabel2.setText("jLabel2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(423, 423, 423)
-                        .addComponent(lblTitle))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 847, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(280, 280, 280)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblBloodPres)
-                            .addComponent(lblBodyTemp)
-                            .addComponent(lblBodySugar))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtBodyTemp, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
-                            .addComponent(txtBloodPres)
-                            .addComponent(txtBloodSugar)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(415, 415, 415)
+                        .addGap(417, 417, 417)
                         .addComponent(lblAddVitalTitle))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 845, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(27, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnSaveVitals)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnUpdateVitals)
-                .addGap(254, 254, 254))
+                        .addGap(292, 292, 292)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(btnSaveVitals)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnUpdateVitals))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblBloodPres)
+                                    .addComponent(lblBodyTemp)
+                                    .addComponent(lblBodySugar))
+                                .addGap(26, 26, 26)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtBodyTemp)
+                                    .addComponent(txtBloodPres, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                                    .addComponent(txtBloodSugar))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblErrorBT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblErrorBP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblErrorBS, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(423, 423, 423)
+                        .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 961, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnSaveVitals, btnUpdateVitals});
@@ -188,70 +226,118 @@ public class VitalSignsJPanel extends javax.swing.JPanel {
                 .addComponent(lblTitle)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblAddVitalTitle)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBodyTemp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblBodyTemp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtBodyTemp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblBloodPres)
-                    .addComponent(txtBloodPres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtBloodSugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblBodySugar))
+                    .addComponent(lblErrorBT, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(txtBloodPres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblBloodPres)
+                    .addComponent(lblErrorBP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblBodySugar)
+                    .addComponent(txtBloodSugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblErrorBS, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSaveVitals)
                     .addComponent(btnUpdateVitals))
-                .addGap(24, 24, 24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSaveVitalsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveVitalsActionPerformed
         // TODO add your handling code here:
-        if(tblPatient.getSelectedRow() >= 0){
-        int selectedRow = tblPatient.getSelectedRow();
-        DefaultTableModel model = (DefaultTableModel) tblPatient.getModel();
-        Person selectedPerson = (Person) model.getValueAt(selectedRow, 0);
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        String date = dtf.format(now);
+        if (tblPatient.getSelectedRow() >= 0) {
+            if (lblErrorBT.getText() == "" && lblErrorBP.getText() == "" && lblErrorBS.getText() == "") {
+                int selectedRow = tblPatient.getSelectedRow();
+                DefaultTableModel model = (DefaultTableModel) tblPatient.getModel();
+                Person selectedPerson = (Person) model.getValueAt(selectedRow, 0);
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                LocalDateTime now = LocalDateTime.now();
+                String date = dtf.format(now);
 
-        VitalSigns vs = vitalSignHistory.createAndAddVitalSign();
-        String updatedBodyTemp = txtBodyTemp.getText();
-        String updatedBloodPressure = txtBloodPres.getText();
-        String updatedBloodSugar = txtBloodSugar.getText();
-        
-        vs.setBloodPressure(Integer.parseInt(updatedBloodPressure));
-        vs.setBodyTemperature(Integer.parseInt(updatedBodyTemp));
-        vs.setSugar(Integer.parseInt(updatedBloodSugar));
-        vs.setTime(date);
-        
-        String status = VitalSignStatus(selectedPerson.getAge(),vs);
-        
-        vs.setStatus(status);
-        selectedPerson.getPatient().setStatus(status);
-        //vitalSignHistory.addVitalSigns(vs);
+                VitalSigns vs = vitalSignHistory.createAndAddVitalSign();
+                String updatedBodyTemp = txtBodyTemp.getText();
+                String updatedBloodPressure = txtBloodPres.getText();
+                String updatedBloodSugar = txtBloodSugar.getText();
 
-        selectedPerson.getPatient().setVitalSignHistory(vitalSignHistory);
-        
-        
-        JOptionPane.showMessageDialog(this, "Vital Sign Added.");
-        
-                
-        populatePatientsTable(personDirectory.getPersonDirectory());
-        populatePatientsVitalSignTable(personDirectory.getPersonDirectory(), vitalSignHistory.getVitalSign());
-        
-        txtBodyTemp.setText("");
-        txtBloodPres.setText("");
-        txtBloodSugar.setText("");
-        }
-        else{
+                vs.setBloodPressure(Integer.parseInt(updatedBloodPressure));
+                vs.setBodyTemperature(Integer.parseInt(updatedBodyTemp));
+                vs.setSugar(Integer.parseInt(updatedBloodSugar));
+                vs.setTime(date);
+
+                String status = VitalSignStatus(selectedPerson.getAge(), vs);
+
+                vs.setStatus(status);
+                selectedPerson.getPatient().setStatus(status);
+                //vitalSignHistory.addVitalSigns(vs);
+
+                selectedPerson.getPatient().setVitalSignHistory(vitalSignHistory);
+
+                JOptionPane.showMessageDialog(this, "Vital Sign Added.");
+
+                populatePatientsTable(personDirectory.getPersonDirectory());
+                populatePatientsVitalSignTable(personDirectory.getPersonDirectory(), vitalSignHistory.getVitalSign());
+
+                txtBodyTemp.setText("");
+                txtBloodPres.setText("");
+                txtBloodSugar.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "Please resolve error ");
+            }
+        } 
+        else if(tblVitalSign.getSelectedRow() >= 0){
+            
+            if (lblErrorBT.getText() == "" && lblErrorBP.getText() == "" && lblErrorBS.getText() == "") {
+                int selectedRow = tblVitalSign.getSelectedRow();
+                DefaultTableModel model = (DefaultTableModel) tblVitalSign.getModel();
+                Person selectedPerson = (Person) model.getValueAt(selectedRow, 0);
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                LocalDateTime now = LocalDateTime.now();
+                String date = dtf.format(now);
+
+                VitalSigns vs = vitalSignHistory.createAndAddVitalSign();
+                String updatedBodyTemp = txtBodyTemp.getText();
+                String updatedBloodPressure = txtBloodPres.getText();
+                String updatedBloodSugar = txtBloodSugar.getText();
+
+                vs.setBloodPressure(Integer.parseInt(updatedBloodPressure));
+                vs.setBodyTemperature(Integer.parseInt(updatedBodyTemp));
+                vs.setSugar(Integer.parseInt(updatedBloodSugar));
+                vs.setTime(date);
+
+                String status = VitalSignStatus(selectedPerson.getAge(), vs);
+
+                vs.setStatus(status);
+                selectedPerson.getPatient().setStatus(status);
+                //vitalSignHistory.addVitalSigns(vs);
+
+                selectedPerson.getPatient().setVitalSignHistory(vitalSignHistory);
+
+                JOptionPane.showMessageDialog(this, "Vital Sign Added.");
+
+                populatePatientsTable(personDirectory.getPersonDirectory());
+                populatePatientsVitalSignTable(personDirectory.getPersonDirectory(), vitalSignHistory.getVitalSign());
+
+                txtBodyTemp.setText("");
+                txtBloodPres.setText("");
+                txtBloodSugar.setText("");
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Please resolve error ");
+            }
+            
+        }else {
             JOptionPane.showMessageDialog(this, "Please select a patient from table ");
         }
 
@@ -260,13 +346,48 @@ public class VitalSignsJPanel extends javax.swing.JPanel {
     private void btnUpdateVitalsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateVitalsActionPerformed
         // TODO add your handling code here:
 
-        int selectedRow = tblPatient.getSelectedRow();
+        int selectedRow = tblVitalSign.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel) tblPatient.getModel();
         Person selectedPerson = (Person) model.getValueAt(selectedRow, 0);
-        txtBodyTemp.setText(String.valueOf(model.getValueAt(selectedRow, 4)));
-        txtBloodPres.setText(String.valueOf(model.getValueAt(selectedRow, 2)));
-        txtBloodSugar.setText(String.valueOf(model.getValueAt(selectedRow, 3)));
+        
+        VitalSigns v = selectedPerson.getPatient().getVitalSignHistory().getVitalSign().get(selectedRow);
+        txtBodyTemp.setText(String.valueOf(v.getBodyTemperature()));
+        txtBloodPres.setText(String.valueOf(v.getBloodPressure()));
+        txtBloodSugar.setText(String.valueOf(v.getSugar()));
     }//GEN-LAST:event_btnUpdateVitalsActionPerformed
+
+    private void txtBodyTempKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBodyTempKeyReleased
+        // TODO add your handling code here:
+                Pattern patt=Pattern.compile("^[0-9]{1,4}$");
+        Matcher match=patt.matcher(txtBodyTemp.getText());
+        if (!match.matches()) {
+            lblErrorBT.setText("ENTER VALID VALUE");
+        }else{
+            lblErrorBT.setText("");
+        }
+    }//GEN-LAST:event_txtBodyTempKeyReleased
+
+    private void txtBloodPresKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBloodPresKeyReleased
+        // TODO add your handling code here:
+                        Pattern patt=Pattern.compile("^[0-9]{1,4}$");
+        Matcher match=patt.matcher(txtBodyTemp.getText());
+        if (!match.matches()) {
+            lblErrorBP.setText("ENTER VALID VALUE");
+        }else{
+            lblErrorBP.setText("");
+        }
+    }//GEN-LAST:event_txtBloodPresKeyReleased
+
+    private void txtBloodSugarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBloodSugarKeyReleased
+        // TODO add your handling code here:
+                        Pattern patt=Pattern.compile("^[0-9]{1,4}$");
+        Matcher match=patt.matcher(txtBodyTemp.getText());
+        if (!match.matches()) {
+            lblErrorBS.setText("ENTER VALID VALUE");
+        }else{
+            lblErrorBS.setText("");
+        }
+    }//GEN-LAST:event_txtBloodSugarKeyReleased
 
 
     private String VitalSignStatus(int patientAge, VitalSigns vitalSign) {
@@ -354,12 +475,16 @@ public class VitalSignsJPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSaveVitals;
     private javax.swing.JButton btnUpdateVitals;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAddVitalTitle;
     private javax.swing.JLabel lblBloodPres;
     private javax.swing.JLabel lblBodySugar;
     private javax.swing.JLabel lblBodyTemp;
+    private javax.swing.JLabel lblErrorBP;
+    private javax.swing.JLabel lblErrorBS;
+    private javax.swing.JLabel lblErrorBT;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JTable tblPatient;
     private javax.swing.JTable tblVitalSign;

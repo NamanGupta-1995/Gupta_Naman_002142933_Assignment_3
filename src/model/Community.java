@@ -22,6 +22,30 @@ public class Community {
         this.communityPostalCode = communityPostalCode;
         this.houses = new ArrayList<House>();
     }
+
+    public String getCommunityName() {
+        return communityName;
+    }
+
+    public void setCommunityName(String communityName) {
+        this.communityName = communityName;
+    }
+
+    public int getCommunityPostalCode() {
+        return communityPostalCode;
+    }
+
+    public void setCommunityPostalCode(int communityPostalCode) {
+        this.communityPostalCode = communityPostalCode;
+    }
+
+    public ArrayList<House> getHouses() {
+        return houses;
+    }
+
+    public void setHouses(ArrayList<House> houses) {
+        this.houses = houses;
+    }
     
     
     

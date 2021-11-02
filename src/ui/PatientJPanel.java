@@ -24,7 +24,7 @@ public class PatientJPanel extends javax.swing.JPanel {
      */
     PatientDirectory patientDirectory;
     PersonDirectory personDirectory;
-    
+    int count = 0;
     public PatientJPanel(PersonDirectory personDirectory, PatientDirectory patientDirectory) {
         initComponents();
         this.personDirectory = personDirectory;
@@ -106,9 +106,15 @@ public class PatientJPanel extends javax.swing.JPanel {
         lblPatientTable = new javax.swing.JLabel();
         lblId = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(255, 255, 204));
+
+        lblTitle.setFont(new java.awt.Font("Lucida Grande", 3, 18)); // NOI18N
         lblTitle.setText("PATIENT");
+        lblTitle.setBorder(new javax.swing.border.MatteBorder(null));
 
+        createPatientTable.setBackground(new java.awt.Color(255, 255, 0));
         createPatientTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -129,15 +135,14 @@ public class PatientJPanel extends javax.swing.JPanel {
             }
         });
 
+        lblCreateTitle.setFont(new java.awt.Font("Lucida Grande", 3, 14)); // NOI18N
         lblCreateTitle.setText("ADD PATIENT DETAILS");
 
+        lblDoctorName.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         lblDoctorName.setText("ENTER DOCTOR NAME");
 
-        txtDrName.setText("jTextField1");
-
+        lblPharmacyName.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         lblPharmacyName.setText("ENTER PREFERRED PHARMACY");
-
-        txtPharmacyName.setText("jTextField2");
 
         btnAddPatient.setText("ADD PATIENT");
         btnAddPatient.addActionListener(new java.awt.event.ActionListener() {
@@ -146,6 +151,7 @@ public class PatientJPanel extends javax.swing.JPanel {
             }
         });
 
+        tblPatient.setBackground(new java.awt.Color(255, 255, 102));
         tblPatient.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -159,20 +165,20 @@ public class PatientJPanel extends javax.swing.JPanel {
         ));
         jScrollPane2.setViewportView(tblPatient);
 
+        lblPatientTable.setFont(new java.awt.Font("Lucida Grande", 3, 14)); // NOI18N
         lblPatientTable.setText("PATIENT DATA");
 
-        lblId.setText("Patient ID");
+        lblId.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        lblId.setText("PATIENT ID");
 
-        txtId.setText("jTextField1");
+        txtId.setEnabled(false);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon("/Users/namangupta/Downloads/reception.png")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(430, 430, 430)
-                .addComponent(lblTitle)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -184,7 +190,7 @@ public class PatientJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblCreateTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCreatePatient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(403, Short.MAX_VALUE))
+                .addContainerGap(319, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(404, 404, 404)
                 .addComponent(btnAddPatient)
@@ -200,11 +206,18 @@ public class PatientJPanel extends javax.swing.JPanel {
                     .addComponent(lblDoctorName)
                     .addComponent(lblPharmacyName))
                 .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtDrName, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                        .addComponent(txtPharmacyName))
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtDrName)
+                    .addComponent(txtPharmacyName, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                    .addComponent(txtId))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(430, 430, 430)
+                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -236,28 +249,34 @@ public class PatientJPanel extends javax.swing.JPanel {
                 .addComponent(lblPatientTable)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(9, 9, 9))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCreatePatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreatePatientActionPerformed
         // TODO add your handling code here:
+
         
-        int selectedRow= createPatientTable.getSelectedRow();
+        int selectedRow = createPatientTable.getSelectedRow();
         if (selectedRow < 0) {
             JOptionPane.showMessageDialog(this, "Please select a row from table.",
                     "Error", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        Person person=(Person) createPatientTable.getValueAt(selectedRow, 0);
-        if(person.getPatient()!=null)
-        {
-            JOptionPane.showMessageDialog(this, "Patient already exists.","Error",
+        Person person = (Person) createPatientTable.getValueAt(selectedRow, 0);
+        if (person.getPatient() != null) {
+            JOptionPane.showMessageDialog(this, "Patient already exists.", "Error",
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        
+
+        JOptionPane.showMessageDialog(this, "Please enter the data below to create patient.");
+        if(!txtId.getText().isEmpty()){
+        count = Integer.parseInt(txtId.getText());
+        }
+        txtId.setText(String.valueOf(count+1));
     }//GEN-LAST:event_btnCreatePatientActionPerformed
 
     private void btnAddPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPatientActionPerformed
@@ -293,6 +312,7 @@ public class PatientJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnAddPatient;
     private javax.swing.JButton btnCreatePatient;
     private javax.swing.JTable createPatientTable;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCreateTitle;

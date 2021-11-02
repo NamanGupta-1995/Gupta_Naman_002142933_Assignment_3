@@ -7,6 +7,8 @@ package ui;
 
 import java.awt.CardLayout;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -46,8 +48,6 @@ public class ManagePersonJPanel extends javax.swing.JPanel {
         viewPersonJTable = new javax.swing.JTable();
         btnUpdatePerson = new javax.swing.JButton();
         btnDeletePerson = new javax.swing.JButton();
-        btnSearchPerson = new javax.swing.JButton();
-        txtSearchPerson = new javax.swing.JTextField();
         lblEditPerson = new javax.swing.JLabel();
         lblEditName = new javax.swing.JLabel();
         lblEditAge = new javax.swing.JLabel();
@@ -56,9 +56,17 @@ public class ManagePersonJPanel extends javax.swing.JPanel {
         txtEditAge = new javax.swing.JTextField();
         txtEditAddress = new javax.swing.JTextField();
         btnEditPerson = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        lblErrorName = new javax.swing.JLabel();
+        lblErrorAge = new javax.swing.JLabel();
 
-        lblTitle.setText("PERSON");
+        setBackground(new java.awt.Color(255, 255, 204));
 
+        lblTitle.setFont(new java.awt.Font("Lucida Grande", 3, 18)); // NOI18N
+        lblTitle.setText("MANAGE PERSON");
+        lblTitle.setBorder(new javax.swing.border.MatteBorder(null));
+
+        viewPersonJTable.setBackground(new java.awt.Color(255, 255, 102));
         viewPersonJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -86,24 +94,32 @@ public class ManagePersonJPanel extends javax.swing.JPanel {
             }
         });
 
-        btnSearchPerson.setText("SEARCH PERSON");
-
-        txtSearchPerson.setText("jTextField1");
-
+        lblEditPerson.setFont(new java.awt.Font("Lucida Grande", 3, 18)); // NOI18N
         lblEditPerson.setText("Update Person");
 
+        lblEditName.setFont(new java.awt.Font("Lucida Grande", 3, 14)); // NOI18N
         lblEditName.setText("NAME");
 
+        lblEditAge.setFont(new java.awt.Font("Lucida Grande", 3, 14)); // NOI18N
         lblEditAge.setText("AGE");
 
+        lblEditAddress.setFont(new java.awt.Font("Lucida Grande", 3, 14)); // NOI18N
         lblEditAddress.setText("HOUSE ADDRESS");
 
-        txtEditName.setText("jTextField1");
+        txtEditName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtEditNameKeyReleased(evt);
+            }
+        });
 
-        txtEditAge.setText("jTextField2");
+        txtEditAge.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtEditAgeKeyReleased(evt);
+            }
+        });
 
-        txtEditAddress.setText("jTextField3");
-
+        btnEditPerson.setBackground(new java.awt.Color(255, 255, 0));
+        btnEditPerson.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         btnEditPerson.setText("UPDATE");
         btnEditPerson.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,86 +127,120 @@ public class ManagePersonJPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel2.setIcon(new javax.swing.ImageIcon("/Users/namangupta/Downloads/reception.png")); // NOI18N
+
+        lblErrorName.setBackground(new java.awt.Color(255, 255, 102));
+        lblErrorName.setForeground(new java.awt.Color(255, 102, 0));
+
+        lblErrorAge.setBackground(new java.awt.Color(255, 255, 102));
+        lblErrorAge.setForeground(new java.awt.Color(255, 102, 0));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 874, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnEditPerson)
-                        .addGap(343, 343, 343)))
-                .addContainerGap(11, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1043, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(343, 343, 343)
+                                                .addComponent(lblEditAddress))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGap(431, 431, 431)
+                                                .addComponent(lblEditAge, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(40, 40, 40))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(lblEditName, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(32, 32, 32)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtEditAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(txtEditAge)
+                                            .addComponent(txtEditName))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(lblErrorName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(lblErrorAge, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 958, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnUpdatePerson)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnDeletePerson)
+                                        .addGap(164, 164, 164)
+                                        .addComponent(lblEditPerson)))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(326, 326, 326)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblEditAge)
-                    .addComponent(lblEditAddress)
-                    .addComponent(lblEditName))
-                .addGap(142, 142, 142)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtEditAge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEditName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEditAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(btnSearchPerson)
-                .addGap(79, 79, 79)
-                .addComponent(txtSearchPerson, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(96, 96, 96)
-                .addComponent(btnUpdatePerson)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnDeletePerson)
-                .addGap(35, 35, 35))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblEditPerson)
-                .addGap(367, 367, 367))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblTitle)
-                .addGap(387, 387, 387))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(411, 411, 411)
+                        .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(440, 440, 440)
+                        .addComponent(btnEditPerson, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtEditAddress, txtEditAge, txtEditName});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(10, 10, 10)
                 .addComponent(lblTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSearchPerson)
-                    .addComponent(txtSearchPerson, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUpdatePerson)
-                    .addComponent(btnDeletePerson))
                 .addGap(18, 18, 18)
-                .addComponent(lblEditPerson)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnUpdatePerson)
+                            .addComponent(btnDeletePerson)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(lblEditPerson)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEditName)
-                    .addComponent(txtEditName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(txtEditName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblErrorName, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEditAge)
-                    .addComponent(txtEditAge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEditAge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblErrorAge))
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblEditAddress)
                     .addComponent(txtEditAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addComponent(btnEditPerson)
-                .addGap(88, 88, 88))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEditPerson, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {lblErrorAge, lblErrorName});
+
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnUpdatePersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdatePersonActionPerformed
         // TODO add your handling code here:
         
         int selectedRow= viewPersonJTable.getSelectedRow();
+        
         if (selectedRow < 0) {
             JOptionPane.showMessageDialog(this, "Please select a row from table.", 
                     "Error", JOptionPane.INFORMATION_MESSAGE);
@@ -205,11 +255,22 @@ public class ManagePersonJPanel extends javax.swing.JPanel {
             txtEditAge.setText(String.valueOf(selectedPerson.getAge()));
             txtEditAddress.setText(selectedPerson.getHouseAddress());
         }
+
         
     }//GEN-LAST:event_btnUpdatePersonActionPerformed
 
+    private Boolean fieldsFilled() {
+
+        if (txtEditName.getText().length() == 0 || txtEditAge.getText().length() == 0 || txtEditAddress.getText().length() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
     private void btnEditPersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPersonActionPerformed
         // TODO add your handling code here:
+        if(fieldsFilled()){
         int selectedRow= viewPersonJTable.getSelectedRow();
         
         String updatedName = txtEditName.getText();
@@ -231,6 +292,10 @@ public class ManagePersonJPanel extends javax.swing.JPanel {
         txtEditName.setText("");
         txtEditAge.setText("");
         txtEditAddress.setText("");
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Please enter all values", "Error", JOptionPane.ERROR_MESSAGE);
+        }
         
     }//GEN-LAST:event_btnEditPersonActionPerformed
 
@@ -253,6 +318,29 @@ public class ManagePersonJPanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnDeletePersonActionPerformed
 
+    private void txtEditNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEditNameKeyReleased
+        // TODO add your handling code here:
+        Pattern patt=Pattern.compile("^[a-zA-Z ]{0,40}$");
+        Matcher match=patt.matcher(txtEditName.getText());
+        if (!match.matches()) {
+            lblErrorName.setText("ENTER VALID NAME");
+        }else{
+            lblErrorName.setText("");
+        }
+    }//GEN-LAST:event_txtEditNameKeyReleased
+
+    private void txtEditAgeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEditAgeKeyReleased
+        // TODO add your handling code here:
+        Pattern patt=Pattern.compile("^[0-9]{1,2}$");
+        Matcher match=patt.matcher(txtEditAge.getText());
+        if (!match.matches()) {
+            lblErrorAge.setText("ENTER VALID AGE");
+        }else{
+            lblErrorAge.setText("");
+        }
+    }//GEN-LAST:event_txtEditAgeKeyReleased
+
+    
     
     private void populatePersonsTable(ArrayList<Person> personsList) {
         DefaultTableModel model = (DefaultTableModel) viewPersonJTable.getModel();
@@ -284,18 +372,19 @@ public class ManagePersonJPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDeletePerson;
     private javax.swing.JButton btnEditPerson;
-    private javax.swing.JButton btnSearchPerson;
     private javax.swing.JButton btnUpdatePerson;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblEditAddress;
     private javax.swing.JLabel lblEditAge;
     private javax.swing.JLabel lblEditName;
     private javax.swing.JLabel lblEditPerson;
+    private javax.swing.JLabel lblErrorAge;
+    private javax.swing.JLabel lblErrorName;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JTextField txtEditAddress;
     private javax.swing.JTextField txtEditAge;
     private javax.swing.JTextField txtEditName;
-    private javax.swing.JTextField txtSearchPerson;
     private javax.swing.JTable viewPersonJTable;
     // End of variables declaration//GEN-END:variables
 }
