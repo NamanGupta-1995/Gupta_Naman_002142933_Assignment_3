@@ -8,6 +8,8 @@ package ui;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import model.City;
+import model.Community;
 import model.Person;
 import model.PersonDirectory;
 
@@ -16,16 +18,20 @@ import model.PersonDirectory;
  * @author namangupta
  */
 public class PersonJPanel extends javax.swing.JPanel {
-
+    
     /**
      * Creates new form PersonJPanel
      */
     PersonDirectory personDirectory;
-    
-    public PersonJPanel(PersonDirectory personDirectory) {
+    City cityName;
+    Community commName;
+    public PersonJPanel(PersonDirectory personDirectory, City cityName, Community commName) {
         initComponents();
         this.personDirectory = personDirectory;
-        
+        this.cityName = cityName;
+        this.commName = commName;
+        txtCommunity.setText(this.commName.getCommunityName());
+        txtCity.setText(this.cityName.getCityName());
     }
 
     /**
@@ -104,6 +110,12 @@ public class PersonJPanel extends javax.swing.JPanel {
         lblCity.setFont(new java.awt.Font("Lucida Grande", 3, 13)); // NOI18N
         lblCity.setText("CITY:");
 
+        txtCity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCityActionPerformed(evt);
+            }
+        });
+
         lblErrorName.setForeground(new java.awt.Color(255, 51, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -124,14 +136,10 @@ public class PersonJPanel extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(356, 356, 356)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblHouseAddress)
-                                        .addGap(59, 59, 59))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(lblCity)
-                                            .addComponent(lblCommunity))
-                                        .addGap(59, 59, 59))))
+                                    .addComponent(lblHouseAddress)
+                                    .addComponent(lblCity)
+                                    .addComponent(lblCommunity))
+                                .addGap(59, 59, 59))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,10 +175,11 @@ public class PersonJPanel extends javax.swing.JPanel {
                 .addGap(22, 22, 22)
                 .addComponent(lblTitle)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblName)
-                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblErrorName, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblErrorName, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblName)
+                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblAge)
@@ -204,18 +213,18 @@ public class PersonJPanel extends javax.swing.JPanel {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-        if(fieldsFilled() && noErrorPresent())
-        {
-            
-            Person person=personDirectory.createPerson();
+        if (fieldsFilled() && noErrorPresent()) {
+
+            Person person = personDirectory.createPerson();
             person.setName(txtName.getText());
             person.setAge(Integer.parseInt(txtAge.getText()));
             person.setHouseAddress(txtHouseAddress.getText());
             person.setCommunity(txtCommunity.getText());
             JOptionPane.showMessageDialog(this, "Person added!!", "Update", JOptionPane.INFORMATION_MESSAGE);
             clearData();
-        }
-        else{
+            txtCommunity.setText(this.commName.getCommunityName());
+            txtCity.setText(this.cityName.getCityName());
+        } else {
             JOptionPane.showMessageDialog(this, "Please enter all values and resolve error", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSaveActionPerformed
@@ -241,6 +250,10 @@ public class PersonJPanel extends javax.swing.JPanel {
             lblErrorName.setText("");
         }
     }//GEN-LAST:event_txtNameKeyReleased
+
+    private void txtCityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCityActionPerformed
 
     private void clearData() {
         txtName.setText("");

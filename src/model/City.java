@@ -21,5 +21,27 @@ public class City {
         this.communities = new ArrayList<Community>();
     }
     
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public ArrayList<Community> getCommunities() {
+        return communities;
+    }
+
+    public void setCommunities(ArrayList<Community> communities) {
+        this.communities = communities;
+    }
+    
+    public Community createPerson() {
+        Community community = new Community();
+        communities.add(community);
+        return community;
+    }
+
     
 }

@@ -34,14 +34,10 @@ public class ManagePatientJPanel extends javax.swing.JPanel {
 
     
     private void populatePatientsTable(ArrayList<Person> personsList) {
+        if(!personsList.isEmpty() || !patientDirectory.getPatients().isEmpty()){
         DefaultTableModel model = (DefaultTableModel) tblManagePatient.getModel();
         model.setRowCount(0);
-        if(personsList.isEmpty())
-        {
-            JOptionPane.showMessageDialog(this, "No Patient found. Please add"
-                    + " Patient", "Warning", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
+
         for (Person person : personsList) {
             Object[] row = new Object[5];
             row[0] = person;
@@ -50,6 +46,12 @@ public class ManagePatientJPanel extends javax.swing.JPanel {
             row[3] = person.getPatient().getDoctorName();
             row[4] = person.getPatient().getPharmacy();
             model.addRow(row);
+        }
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "No Patient found. Please add"
+                    + " Patient", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            return;
         }
     }
     /**

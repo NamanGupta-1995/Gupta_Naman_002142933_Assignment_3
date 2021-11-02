@@ -17,11 +17,7 @@ public class Community {
     private int communityPostalCode;
     ArrayList<House> houses;
 
-    public Community(String communityName, int communityPostalCode) {
-        this.communityName = communityName;
-        this.communityPostalCode = communityPostalCode;
-        this.houses = new ArrayList<House>();
-    }
+
 
     public String getCommunityName() {
         return communityName;

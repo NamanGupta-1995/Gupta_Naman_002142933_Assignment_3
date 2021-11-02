@@ -54,7 +54,7 @@ public class FilterJPanel extends javax.swing.JPanel {
                     row[0] = person;
                     row[1] = person.getPatient().getId();
                     row[2] = person.getCommunity();
-                    row[3] = person.getPatient().getStatus();
+                    row[3] = person.getPatient().getVitalSignHistory().getVitalSign().get(i).getStatus();
                     model.addRow(row);
                     i++;
                 }

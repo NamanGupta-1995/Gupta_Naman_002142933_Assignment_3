@@ -6,6 +6,8 @@
 package ui;
 
 import java.awt.CardLayout;
+import model.City;
+import model.Community;
 import model.PatientDirectory;
 import model.PersonDirectory;
 import model.SystemClass;
@@ -25,6 +27,8 @@ public class MainJFrame extends javax.swing.JFrame {
     PatientDirectory patient;
     PersonDirectory person;
     VitalSignHistory vs;
+    City cityName;
+    Community commName;
     
     
     public MainJFrame() {
@@ -33,6 +37,8 @@ public class MainJFrame extends javax.swing.JFrame {
         patient = systemClass.getPatientDirectory();
         person = systemClass.getPersonDirectory();
         vs = new VitalSignHistory();
+        this.cityName = new City();
+        this.commName = new Community();
     }
 
     /**
@@ -52,6 +58,7 @@ public class MainJFrame extends javax.swing.JFrame {
         btnManagePatient = new javax.swing.JButton();
         btnVitalSigns = new javax.swing.JButton();
         btnFilterPatient = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         workArea = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -101,6 +108,13 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("ADD CITY");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
         controlPanel.setLayout(controlPanelLayout);
         controlPanelLayout.setHorizontalGroup(
@@ -108,13 +122,17 @@ public class MainJFrame extends javax.swing.JFrame {
             .addGroup(controlPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnManagePerson)
-                    .addComponent(btnManagePatient)
-                    .addComponent(btnPatient)
-                    .addComponent(btnPerson)
-                    .addComponent(btnVitalSigns)
-                    .addComponent(btnFilterPatient))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(controlPanelLayout.createSequentialGroup()
+                        .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnManagePerson)
+                            .addComponent(btnManagePatient)
+                            .addComponent(btnPatient)
+                            .addComponent(btnPerson)
+                            .addComponent(btnVitalSigns)
+                            .addComponent(btnFilterPatient))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         controlPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnFilterPatient, btnManagePatient, btnManagePerson, btnPatient, btnPerson, btnVitalSigns});
@@ -122,7 +140,9 @@ public class MainJFrame extends javax.swing.JFrame {
         controlPanelLayout.setVerticalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(controlPanelLayout.createSequentialGroup()
-                .addGap(145, 145, 145)
+                .addGap(104, 104, 104)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnPerson)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnManagePerson)
@@ -187,7 +207,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private void btnPersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonActionPerformed
         // TODO add your handling code here:
 
-        PersonJPanel personJPanel = new PersonJPanel(person);
+        PersonJPanel personJPanel = new PersonJPanel(person, cityName, commName);
         splitPanel.setRightComponent(personJPanel);
     }//GEN-LAST:event_btnPersonActionPerformed
 
@@ -226,6 +246,13 @@ public class MainJFrame extends javax.swing.JFrame {
         FilterJPanel filterJPanel = new FilterJPanel(person, patient, vs);
         splitPanel.setRightComponent(filterJPanel);
     }//GEN-LAST:event_btnFilterPatientActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        CityJPanel cityJPanel = new CityJPanel(person, cityName, commName);
+        splitPanel.setRightComponent(cityJPanel);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -270,6 +297,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnPerson;
     private javax.swing.JButton btnVitalSigns;
     private javax.swing.JPanel controlPanel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JSplitPane splitPanel;
     private javax.swing.JPanel workArea;

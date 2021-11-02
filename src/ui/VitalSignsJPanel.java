@@ -46,9 +46,10 @@ public class VitalSignsJPanel extends javax.swing.JPanel {
 
     
     private void populatePatientsTable(ArrayList<Person> personsList) {
+        
         DefaultTableModel model = (DefaultTableModel) tblPatient.getModel();
         model.setRowCount(0);
-        if(personsList.isEmpty())
+        if(personsList.isEmpty() || patientDirectory.getPatients().isEmpty())
         {
             JOptionPane.showMessageDialog(this, "No Patient found. Please add"
                     + " Patient", "Warning", JOptionPane.INFORMATION_MESSAGE);
